@@ -1,0 +1,250 @@
+body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #0a0a0a;
+}
+
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#ls-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 0 0 40px;
+  animation: panel-rise 0.6s ease forwards;
+}
+
+/* ── Top bar ── */
+#ls-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #111;
+  border-bottom: 2px solid #222;
+  padding: 12px 24px;
+}
+
+#ls-back {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  background: none;
+  border: 1px solid #333;
+  color: #666;
+  padding: 8px 14px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 0.15s;
+}
+#ls-back:hover { color: #fff; border-color: #fff; }
+
+#ls-mode {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  color: #fff;
+  letter-spacing: 0.3em;
+}
+
+#ls-unit {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  color: #444;
+  letter-spacing: 0.15em;
+}
+
+/* ── Layer header ── */
+#layer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 14px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+#layer-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.7rem, 2.5vw, 1.1rem);
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+
+#layer-name span {
+  color: #888;
+  font-size: 0.8em;
+}
+
+#secret-mission-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.48rem;
+  color: #444;
+  border: 1px solid #222;
+  padding: 10px 16px;
+  cursor: not-allowed;
+  letter-spacing: 0.15em;
+}
+
+/* ── Chapter grid ── */
+#chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2px;
+  padding: 18px 20px;
+  background: #0a0a0a;
+}
+
+/* ── Chapter card ── */
+.chapter-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-card.active:hover {
+  border-color: #fff;
+  transform: translateY(-2px);
+  z-index: 2;
+}
+
+.chapter-card.locked {
+  cursor: default;
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+/* Preview area */
+.chapter-preview {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.locked-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #060606;
+}
+
+.lock-icon {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 2rem;
+  color: #1a1a1a;
+}
+
+/* Rank row */
+.chapter-rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.rank-boxes {
+  display: flex;
+  gap: 4px;
+}
+
+.rank-box {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #222;
+  background: #0a0a0a;
+}
+
+.rank-box.filled {
+  background: #333;
+  border-color: #555;
+}
+
+.chapter-final-rank {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.4rem;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #000;
+  min-width: 24px;
+  text-align: center;
+}
+
+.locked-rank { color: #222; }
+
+/* Status */
+.chapter-status {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: #555;
+  padding: 7px 12px;
+  letter-spacing: 0.15em;
+  text-align: center;
+  background: #0d0d0d;
+}
+
+/* Footer */
+.chapter-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: #0a0a0a;
+}
+
+.chapter-diff {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: #444;
+  letter-spacing: 0.1em;
+}
+
+.chapter-pb {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: #666;
+  letter-spacing: 0.05em;
+}
+
+/* Number + Title */
+.chapter-number {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: #888;
+  padding: 8px 12px 2px;
+  letter-spacing: 0.2em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chapter-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.42rem, 1.2vw, 0.6rem);
+  color: #ccc;
+  padding: 2px 12px 12px;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+}
+
+@keyframes panel-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
