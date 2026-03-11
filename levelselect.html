@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deep Exploration — Level Select</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/levelselect.css"/>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div id="ls-wrap">
+
+    <!-- Top bar -->
+    <div id="ls-topbar">
+      <button id="ls-back" onclick="window.location.href='menu.html'">← BACK</button>
+      <div id="ls-mode">STANDARD</div>
+      <div id="ls-unit"></div>
+    </div>
+
+    <!-- Layer header -->
+    <div id="layer-header">
+      <div id="layer-name">LAYER E1: <span>THE ASHEN EXPANSE</span></div>
+      <div id="layer-right">
+        <div id="secret-mission-btn">SECRET MISSION</div>
+      </div>
+    </div>
+
+    <!-- Chapter grid -->
+    <div id="chapter-grid">
+
+      <!-- E1-1 — BUILT -->
+      <div class="chapter-card active" onclick="startLevel('game.html', 'E1-1')">
+        <div class="chapter-preview" id="preview-e1-1">
+          <canvas class="preview-canvas" width="200" height="120" id="pc-e1-1"></canvas>
+        </div>
+        <div class="chapter-rank-row">
+          <div class="rank-boxes">
+            <div class="rank-box filled"></div>
+            <div class="rank-box filled"></div>
+            <div class="rank-box filled"></div>
+            <div class="rank-box filled"></div>
+            <div class="rank-box filled"></div>
+          </div>
+          <div class="chapter-final-rank" id="cfr-e1-1">-</div>
+        </div>
+        <div class="chapter-status" id="cstatus-e1-1">— NOT PLAYED —</div>
+        <div class="chapter-footer">
+          <span class="chapter-diff">ANY</span>
+          <span class="chapter-pb" id="cpb-e1-1">--:--:---</span>
+        </div>
+        <div class="chapter-number">E1-1</div>
+        <div class="chapter-title">THE ASHEN EXPANSE</div>
+      </div>
+
+      <!-- E1-2 — LOCKED -->
+      <div class="chapter-card locked">
+        <div class="chapter-preview locked-preview">
+          <div class="lock-icon">?</div>
+        </div>
+        <div class="chapter-rank-row">
+          <div class="rank-boxes">
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+          </div>
+          <div class="chapter-final-rank locked-rank">-</div>
+        </div>
+        <div class="chapter-status">— LOCKED —</div>
+        <div class="chapter-footer">
+          <span class="chapter-diff">???</span>
+          <span class="chapter-pb">--:--:---</span>
+        </div>
+        <div class="chapter-number">E1-2</div>
+        <div class="chapter-title">COMING SOON</div>
+      </div>
+
+      <!-- E1-3 — LOCKED -->
+      <div class="chapter-card locked">
+        <div class="chapter-preview locked-preview">
+          <div class="lock-icon">?</div>
+        </div>
+        <div class="chapter-rank-row">
+          <div class="rank-boxes">
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+          </div>
+          <div class="chapter-final-rank locked-rank">-</div>
+        </div>
+        <div class="chapter-status">— LOCKED —</div>
+        <div class="chapter-footer">
+          <span class="chapter-diff">???</span>
+          <span class="chapter-pb">--:--:---</span>
+        </div>
+        <div class="chapter-number">E1-3</div>
+        <div class="chapter-title">COMING SOON</div>
+      </div>
+
+      <!-- E1-4 — LOCKED -->
+      <div class="chapter-card locked">
+        <div class="chapter-preview locked-preview">
+          <div class="lock-icon">?</div>
+        </div>
+        <div class="chapter-rank-row">
+          <div class="rank-boxes">
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+            <div class="rank-box"></div>
+          </div>
+          <div class="chapter-final-rank locked-rank">-</div>
+        </div>
+        <div class="chapter-status">— LOCKED —</div>
+        <div class="chapter-footer">
+          <span class="chapter-diff">???</span>
+          <span class="chapter-pb">--:--:---</span>
+        </div>
+        <div class="chapter-number">E1-4</div>
+        <div class="chapter-title">COMING SOON</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/levelselect.js"></script>
+</body>
+</html>
