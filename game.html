@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deep Exploration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Cinzel+Decorative:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/game.css"/>
+</head>
+<body>
+
+  <!-- TOP HUD -->
+  <div id="hud">
+    <div id="hud-left">
+      <div class="hud-label">UNIT HP</div>
+      <div id="hp-bar-wrap"><div id="hp-bar"></div></div>
+      <div id="hp-text">100 / 100</div>
+      <div id="weapon-display">— NO WEAPON —</div>
+    </div>
+
+    <div id="hud-center">
+      <span id="hud-zone">E1 — EXPLORATION 1</span>
+      <span id="hud-subtitle">The Ashen Expanse</span>
+      <span id="hud-boss-warning">⚠ BOSS AHEAD</span>
+    </div>
+
+    <div id="hud-right">
+      <div class="hud-label">GENIUS</div>
+      <div id="genius-bar-wrap"><div id="genius-bar"></div></div>
+      <div id="hud-timer">00:00.000</div>
+    </div>
+  </div>
+
+  <!-- SPEEDRUN STATS (live) -->
+  <div id="live-stats">
+    <div class="stat-row"><span class="stat-key">KILLS</span><span class="stat-val" id="stat-kills">0</span><span class="stat-rank" id="rank-kills">D</span></div>
+    <div class="stat-row"><span class="stat-key">STYLE</span><span class="stat-val" id="stat-style">0</span><span class="stat-rank" id="rank-style">D</span></div>
+    <div class="stat-row"><span class="stat-key">TIME</span><span class="stat-val" id="stat-time">--:--</span><span class="stat-rank" id="rank-time">-</span></div>
+  </div>
+
+  <!-- MAIN CANVAS -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- BATTLE OVERLAY -->
+  <div id="battle-overlay" class="hidden">
+    <div id="battle-scene">
+      <div id="enemy-area">
+        <canvas id="enemy-canvas" width="160" height="160"></canvas>
+        <div id="enemy-name">SEEKER</div>
+        <div id="enemy-hp-wrap"><div id="enemy-hp-bar"></div></div>
+        <div id="enemy-hp-text">80 / 80</div>
+        <div id="genius-spray" class="hidden">💧 GENIUS sprays! +HP</div>
+      </div>
+      <div id="question-box">
+        <div id="q-subject-tag">ELA</div>
+        <div id="q-text">Loading...</div>
+        <div id="q-voice-btn" onclick="speakQuestion()">🔊 Hear it</div>
+        <div id="q-choices"></div>
+        <div id="q-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BATTLE LOG -->
+  <div id="battle-log" class="hidden"></div>
+
+  <!-- END SCREEN (hidden until level complete) -->
+  <div id="end-screen" class="hidden">
+    <div id="end-inner">
+      <div id="end-level-name">E1-1: THE ASHEN EXPANSE</div>
+      <div id="end-mode">— STANDARD —</div>
+      <div id="end-stats-table">
+        <div class="end-row"><span class="end-key">TIME</span><span class="end-val" id="end-time">--</span><span class="end-letter" id="end-time-rank">-</span></div>
+        <div class="end-row"><span class="end-key">KILLS</span><span class="end-val" id="end-kills">0</span><span class="end-letter" id="end-kills-rank">D</span></div>
+        <div class="end-row"><span class="end-key">STYLE</span><span class="end-val" id="end-style">0</span><span class="end-letter" id="end-style-rank">D</span></div>
+        <div class="end-row"><span class="end-key">SECRETS</span><span class="end-val" id="end-secrets">0 / 3</span></div>
+      </div>
+      <div id="end-bonuses"></div>
+      <div id="end-final-rank-wrap">
+        <div id="end-final-label">FINAL RANK</div>
+        <div id="end-final-rank">D</div>
+      </div>
+      <div id="end-leaderboard">
+        <div id="lb-title">[ TOP RUNS ]</div>
+        <div id="lb-entries">Loading...</div>
+      </div>
+      <button id="end-continue" onclick="continueAfterEnd()">CONTINUE →</button>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoff2wpd4uUaDBdeZcqMz4ASYsd2zrVz4",
+      authDomain: "deep-exploration.firebaseapp.com",
+      projectId: "deep-exploration",
+      storageBucket: "deep-exploration.firebasestorage.app",
+      messagingSenderId: "423601867645",
+      appId: "1:423601867645:web:e2650c5d49cd29c44d9a14",
+      measurementId: "G-VTPK3QD7FT"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // Expose to window for game.js
+    window._db = db;
+    window._fsCollection = collection;
+    window._fsAddDoc = addDoc;
+    window._fsGetDocs = getDocs;
+    window._fsQuery = query;
+    window._fsOrderBy = orderBy;
+    window._fsLimit = limit;
+    window._firebaseReady = true;
+  </script>
+
+  <script src="js/weapons.js"></script>
+  <script src="js/battle.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/boss.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
