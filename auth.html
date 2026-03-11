@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deep Exploration — Enter the Void</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Share+Tech+Mono&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/auth.css"/>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="auth-wrapper">
+    <div class="auth-logo">
+      <span class="logo-de">DEEP EXPLORATION</span>
+      <span class="logo-sub">by UU Production</span>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab-btn active" id="tab-signup" onclick="switchTab('signup')">NEW SOUL</button>
+      <button class="tab-btn" id="tab-signin" onclick="switchTab('signin')">RETURN</button>
+    </div>
+
+    <!-- SIGN UP -->
+    <div class="auth-panel" id="panel-signup">
+      <p class="panel-lore">"A machine awakens in the ruins of heaven. What is your designation?"</p>
+
+      <div class="field-group">
+        <label>NICKNAME / NAME</label>
+        <input type="text" id="su-nickname" placeholder="e.g. Xyron" maxlength="20"/>
+      </div>
+
+      <div class="field-group">
+        <label>DISPLAY NAME</label>
+        <input type="text" id="su-displayname" placeholder="Shown to other players" maxlength="24"/>
+      </div>
+
+      <div class="field-group">
+        <label>GMAIL</label>
+        <input type="email" id="su-email" placeholder="yourname@gmail.com"/>
+      </div>
+
+      <div class="field-group">
+        <label>PASSWORD</label>
+        <input type="password" id="su-password" placeholder="••••••••"/>
+      </div>
+
+      <div class="field-group">
+        <label>WHAT GRADE ARE YOU IN?</label>
+        <div class="grade-grid">
+          <button class="grade-btn" onclick="selectGrade(this, 1)">1st</button>
+          <button class="grade-btn" onclick="selectGrade(this, 2)">2nd</button>
+          <button class="grade-btn" onclick="selectGrade(this, 3)">3rd</button>
+          <button class="grade-btn" onclick="selectGrade(this, 4)">4th</button>
+          <button class="grade-btn" onclick="selectGrade(this, 5)">5th</button>
+          <button class="grade-btn" onclick="selectGrade(this, 6)">6th</button>
+        </div>
+      </div>
+
+      <div id="su-error" class="error-msg"></div>
+      <button class="submit-btn" onclick="handleSignUp()">AWAKEN</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div class="auth-panel hidden" id="panel-signin">
+      <p class="panel-lore">"The void remembers you. Prove it."</p>
+
+      <div class="field-group">
+        <label>GMAIL</label>
+        <input type="email" id="si-email" placeholder="yourname@gmail.com"/>
+      </div>
+
+      <div class="field-group">
+        <label>PASSWORD</label>
+        <input type="password" id="si-password" placeholder="••••••••"/>
+      </div>
+
+      <div id="si-error" class="error-msg"></div>
+      <button class="submit-btn" onclick="handleSignIn()">DESCEND</button>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>
