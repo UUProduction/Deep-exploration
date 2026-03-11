@@ -1,16 +1,28 @@
-body {
-  background: #050508;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+/* ── Reset + base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-#game-canvas {
-  position: fixed;
-  inset: 0;
+html, body {
   width: 100%;
   height: 100%;
+  background: #000;
+  overflow: hidden;
+  position: fixed;
+}
+
+/* ── Canvas fills entire screen ── */
+#game-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 1;
+  display: block;
   image-rendering: pixelated;
 }
 
@@ -22,22 +34,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 10px 18px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent);
+  padding: 8px 14px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.82), transparent);
   pointer-events: none;
 }
 
 .hud-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
+  font-size: clamp(0.3rem, 1.2vw, 0.42rem);
   letter-spacing: 0.2em;
   color: #444;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 #hp-bar-wrap, #genius-bar-wrap {
-  width: 130px;
-  height: 7px;
+  width: clamp(80px, 18vw, 130px);
+  height: 6px;
   background: #0a0000;
   border: 1px solid #2a0000;
 }
@@ -58,128 +70,194 @@ body {
 
 #hp-text {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
+  font-size: clamp(0.28rem, 1vw, 0.42rem);
   color: #aaa;
   margin-top: 3px;
 }
 
 #weapon-display {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
+  font-size: clamp(0.25rem, 0.9vw, 0.38rem);
   color: #00e5ff;
-  margin-top: 5px;
-  letter-spacing: 0.1em;
+  margin-top: 4px;
 }
 
 #hud-center {
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   align-items: center;
 }
 
 #hud-zone {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.45rem, 1.5vw, 0.7rem);
+  font-size: clamp(0.38rem, 1.4vw, 0.7rem);
   color: #c9a84c;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
 }
 
 #hud-subtitle {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
+  font-size: clamp(0.25rem, 0.8vw, 0.38rem);
   color: #333;
 }
 
 #hud-boss-warning {
   display: none;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.4rem;
+  font-size: clamp(0.28rem, 1vw, 0.4rem);
   color: #ff2200;
   animation: blink 0.7s ease infinite;
 }
 
 #hud-timer {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.55rem;
+  font-size: clamp(0.32rem, 1.1vw, 0.55rem);
   color: #c9a84c;
-  margin-top: 5px;
-  letter-spacing: 0.1em;
+  margin-top: 4px;
+  letter-spacing: 0.08em;
 }
 
-/* ── LIVE STATS (ULTRAKILL style left panel) ── */
+/* ── Live stats ── */
 #live-stats {
   position: fixed;
-  top: 70px;
-  left: 14px;
+  top: 60px;
+  left: 10px;
   z-index: 20;
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .stat-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .stat-key {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
+  font-size: clamp(0.28rem, 1vw, 0.42rem);
   color: #444;
-  width: 44px;
-  letter-spacing: 0.1em;
+  width: 40px;
 }
 
 .stat-val {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.52rem;
-  color: #888;
-  width: 56px;
+  font-size: clamp(0.32rem, 1.1vw, 0.52rem);
+  color: #777;
+  width: 48px;
   text-align: right;
 }
 
 .stat-rank {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.75rem;
+  font-size: clamp(0.5rem, 1.6vw, 0.75rem);
   font-weight: bold;
-  width: 18px;
+  width: 16px;
   text-align: center;
   transition: color 0.3s, text-shadow 0.3s;
 }
 
 .rank-D { color: #555; }
-.rank-C { color: #aaaaaa; }
+.rank-C { color: #aaa; }
 .rank-B { color: #4488ff; text-shadow: 0 0 8px #4488ff; }
 .rank-A { color: #ff8800; text-shadow: 0 0 10px #ff8800; }
 .rank-S { color: #ff2200; text-shadow: 0 0 14px #ff4400; }
-.rank-P { color: #ffd700; text-shadow: 0 0 20px #ffd700, 0 0 40px #ffaa00; animation: p-pulse 0.6s ease infinite alternate; }
+.rank-P {
+  color: #ffd700;
+  text-shadow: 0 0 20px #ffd700, 0 0 40px #ffaa00;
+  animation: p-pulse 0.6s ease infinite alternate;
+}
 
 @keyframes p-pulse {
   from { text-shadow: 0 0 20px #ffd700, 0 0 40px #ffaa00; }
   to   { text-shadow: 0 0 40px #fff700, 0 0 80px #ffd700; }
 }
 
-/* ── BATTLE ── */
+/* ── Mobile controls ── */
+#mobile-controls {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 22;
+  display: none;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 16px 24px;
+  pointer-events: none;
+}
+
+/* Show on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  #mobile-controls { display: flex; }
+}
+
+#mobile-left, #mobile-right {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  pointer-events: all;
+}
+
+.mob-btn {
+  width: 62px;
+  height: 62px;
+  background: rgba(0,0,0,0.55);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background 0.1s, border-color 0.1s;
+  touch-action: none;
+}
+
+.mob-btn:active,
+.mob-btn.pressed {
+  background: rgba(139,0,0,0.5);
+  border-color: rgba(255,69,0,0.6);
+  color: #fff;
+}
+
+.mob-jump {
+  width: 72px;
+  height: 72px;
+  font-size: 1.3rem;
+  border-color: rgba(255,69,0,0.3);
+}
+
+.mob-pick {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+/* ── Battle overlay ── */
 #battle-overlay {
   position: fixed;
   inset: 0;
   z-index: 30;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.92);
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(5px);
+  padding: 12px;
 }
 
 #battle-scene {
   display: flex;
-  gap: 36px;
+  gap: 24px;
   align-items: center;
-  width: min(900px, 96vw);
+  width: 100%;
+  max-width: 860px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -188,25 +266,28 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
+  flex-shrink: 0;
 }
 
 #enemy-canvas {
   image-rendering: pixelated;
   border: 1px solid #1a1a1a;
   background: #04000a;
+  width: clamp(120px, 25vw, 160px);
+  height: clamp(120px, 25vw, 160px);
 }
 
 #enemy-name {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.7rem;
+  font-size: clamp(0.5rem, 1.8vw, 0.7rem);
   color: #d4c5a9;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
 }
 
 #enemy-hp-wrap {
-  width: 160px;
-  height: 7px;
+  width: clamp(120px, 25vw, 160px);
+  height: 6px;
   background: #0a0000;
   border: 1px solid #3a0000;
 }
@@ -220,36 +301,32 @@ body {
 
 #enemy-hp-text {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
+  font-size: clamp(0.28rem, 1vw, 0.38rem);
   color: #555;
 }
 
 #genius-spray {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem;
+  font-size: clamp(0.38rem, 1.2vw, 0.5rem);
   color: #00ccff;
   text-shadow: 0 0 12px #00ccff;
-  animation: spray-pop 0.5s ease;
+  text-align: center;
 }
 
-@keyframes spray-pop {
-  from { transform: scale(0.7); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
-
+/* ── Question box ── */
 #question-box {
   flex: 1;
-  min-width: 280px;
+  min-width: min(260px, 90vw);
   max-width: 500px;
-  background: rgba(4,4,8,0.95);
+  background: rgba(4,4,8,0.97);
   border: 1px solid #2a1a1a;
   border-top: 2px solid #8b0000;
-  padding: 22px;
+  padding: clamp(14px, 3vw, 22px);
 }
 
 #q-subject-tag {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
+  font-size: clamp(0.32rem, 1vw, 0.45rem);
   letter-spacing: 0.3em;
   color: #ff4500;
   margin-bottom: 10px;
@@ -257,28 +334,28 @@ body {
 
 #q-text {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.5rem, 1.5vw, 0.7rem);
+  font-size: clamp(0.48rem, 1.4vw, 0.7rem);
   color: #d4c5a9;
   line-height: 2;
-  margin-bottom: 16px;
-  min-height: 60px;
+  margin-bottom: 14px;
+  min-height: 48px;
 }
 
 #q-voice-btn {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
+  font-size: clamp(0.32rem, 1vw, 0.45rem);
   color: #0088aa;
   cursor: pointer;
-  margin-bottom: 14px;
-  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+  letter-spacing: 0.12em;
   display: inline-block;
+  padding: 4px 0;
 }
-#q-voice-btn:hover { color: #00ccff; }
 
 #q-choices {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 
 .choice-btn {
@@ -287,19 +364,23 @@ body {
   border-left: 2px solid #2a0000;
   color: #888;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem;
-  padding: 10px 14px;
+  font-size: clamp(0.4rem, 1.2vw, 0.5rem);
+  padding: clamp(8px, 2vw, 11px) clamp(10px, 2.5vw, 14px);
   cursor: pointer;
   text-align: left;
   transition: all 0.12s;
   line-height: 1.8;
+  width: 100%;
+  min-height: 44px; /* touch-friendly */
 }
 
-.choice-btn:hover {
+.choice-btn:hover,
+.choice-btn:focus {
   border-left-color: #ff4500;
   color: #d4c5a9;
   background: rgba(139,0,0,0.12);
   transform: translateX(3px);
+  outline: none;
 }
 
 .choice-btn.correct {
@@ -316,61 +397,59 @@ body {
 
 #q-result {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem;
+  font-size: clamp(0.38rem, 1.1vw, 0.5rem);
   margin-top: 12px;
-  min-height: 18px;
+  min-height: 16px;
   color: #ff6600;
-  line-height: 1.8;
+  line-height: 2;
+  white-space: pre-line;
 }
 
+/* ── Battle log ── */
 #battle-log {
   position: fixed;
-  bottom: 18px;
-  left: 18px;
+  bottom: 100px;
+  left: 14px;
   z-index: 25;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
+  font-size: clamp(0.3rem, 1vw, 0.42rem);
   color: #555;
-  max-width: 280px;
+  max-width: 260px;
   pointer-events: none;
   line-height: 1.8;
 }
 
-/* ── END SCREEN ── */
+/* ── End screen ── */
 #end-screen {
   position: fixed;
   inset: 0;
   z-index: 80;
-  background: rgba(0,0,0,0.96);
+  background: rgba(0,0,0,0.97);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
+  padding: 20px;
 }
 
 #end-inner {
-  width: min(620px, 94vw);
+  width: min(580px, 96vw);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   animation: panel-rise 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
-}
-
-@keyframes panel-rise {
-  from { opacity:0; transform: translateY(24px); }
-  to   { opacity:1; transform: translateY(0); }
 }
 
 #end-level-name {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.6rem, 2.5vw, 1rem);
+  font-size: clamp(0.55rem, 2vw, 1rem);
   color: #fff;
-  letter-spacing: 0.15em;
-  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.12em;
 }
 
 #end-mode {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
+  font-size: clamp(0.3rem, 1vw, 0.45rem);
   color: #444;
   letter-spacing: 0.3em;
 }
@@ -380,76 +459,75 @@ body {
   flex-direction: column;
   gap: 8px;
   border-top: 1px solid #1a1a1a;
-  padding-top: 14px;
+  padding-top: 12px;
 }
 
 .end-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .end-key {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.48rem;
+  font-size: clamp(0.35rem, 1.1vw, 0.48rem);
   color: #555;
-  width: 70px;
-  letter-spacing: 0.15em;
+  width: 64px;
 }
 
 .end-val {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.6rem;
+  font-size: clamp(0.42rem, 1.3vw, 0.6rem);
   color: #aaa;
   flex: 1;
 }
 
 .end-letter {
   font-family: 'Press Start 2P', monospace;
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
   font-weight: bold;
-  width: 30px;
+  width: 28px;
   text-align: center;
 }
 
 #end-bonuses {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
+  font-size: clamp(0.3rem, 1vw, 0.42rem);
   color: #c9a84c;
-  letter-spacing: 0.15em;
-  line-height: 2;
+  letter-spacing: 0.12em;
+  line-height: 2.2;
+  white-space: pre-line;
 }
 
 #end-final-rank-wrap {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   border-top: 1px solid #1a1a1a;
-  padding-top: 14px;
+  padding-top: 12px;
 }
 
 #end-final-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem;
+  font-size: clamp(0.35rem, 1vw, 0.5rem);
   color: #555;
   letter-spacing: 0.2em;
 }
 
 #end-final-rank {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(2rem, 8vw, 4rem);
+  font-size: clamp(1.8rem, 6vw, 4rem);
   font-weight: bold;
-  transition: color 0.5s, text-shadow 0.5s;
 }
 
 #end-leaderboard {
   border-top: 1px solid #1a1a1a;
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 #lb-title {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
+  font-size: clamp(0.3rem, 1vw, 0.45rem);
   color: #333;
   letter-spacing: 0.3em;
   margin-bottom: 8px;
@@ -457,33 +535,34 @@ body {
 
 #lb-entries {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
+  font-size: clamp(0.3rem, 1vw, 0.42rem);
   color: #555;
   line-height: 2.2;
 }
 
 .lb-row {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
 }
 
-.lb-pos { color: #333; width: 18px; }
+.lb-pos  { color: #333; width: 16px; }
 .lb-name { color: #777; flex: 1; }
 .lb-rtime { color: #aaa; }
 .lb-rrank { font-weight: bold; }
 
 #end-continue {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.55rem;
+  font-size: clamp(0.42rem, 1.3vw, 0.55rem);
   background: #8b0000;
   border: 1px solid #ff4500;
   color: #fff;
-  padding: 12px 28px;
+  padding: clamp(10px, 2.5vw, 14px) clamp(18px, 4vw, 28px);
   cursor: pointer;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   align-self: flex-start;
   margin-top: 6px;
+  min-height: 44px;
   transition: all 0.15s;
 }
 
@@ -492,9 +571,15 @@ body {
   box-shadow: 0 0 20px rgba(255,69,0,0.4);
 }
 
+/* ── Shared utils ── */
 .hidden { display: none !important; }
 
 @keyframes blink {
   0%,100% { opacity:1; }
   50%      { opacity:0.15; }
+}
+
+@keyframes panel-rise {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
 }
