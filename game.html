@@ -10,10 +10,7 @@
 </head>
 <body>
 
-  <!-- MAIN CANVAS — rendered first so it exists before any JS runs -->
-  <canvas id="game-canvas"></canvas>
-
-  <!-- HUD -->
+  <!-- TOP HUD -->
   <div id="hud">
     <div id="hud-left">
       <div class="hud-label">UNIT HP</div>
@@ -21,48 +18,29 @@
       <div id="hp-text">100 / 100</div>
       <div id="weapon-display">— NO WEAPON —</div>
     </div>
+
     <div id="hud-center">
       <span id="hud-zone">E1 — EXPLORATION 1</span>
       <span id="hud-subtitle">The Ashen Expanse</span>
       <span id="hud-boss-warning">⚠ BOSS AHEAD</span>
     </div>
+
     <div id="hud-right">
       <div class="hud-label">GENIUS</div>
       <div id="genius-bar-wrap"><div id="genius-bar"></div></div>
-      <div id="hud-timer">00:00.000</div>
+      <div id="hud-timer">0:00.000</div>
     </div>
   </div>
 
   <!-- LIVE STATS -->
   <div id="live-stats">
-    <div class="stat-row">
-      <span class="stat-key">KILLS</span>
-      <span class="stat-val" id="stat-kills">0</span>
-      <span class="stat-rank rank-D" id="rank-kills">D</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-key">STYLE</span>
-      <span class="stat-val" id="stat-style">0</span>
-      <span class="stat-rank rank-D" id="rank-style">D</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-key">TIME</span>
-      <span class="stat-val" id="stat-time">--:--</span>
-      <span class="stat-rank" id="rank-time">-</span>
-    </div>
+    <div class="stat-row"><span class="stat-key">KILLS</span><span class="stat-val" id="stat-kills">0</span><span class="stat-rank rank-D" id="rank-kills">D</span></div>
+    <div class="stat-row"><span class="stat-key">STYLE</span><span class="stat-val" id="stat-style">0</span><span class="stat-rank rank-D" id="rank-style">D</span></div>
+    <div class="stat-row"><span class="stat-key">TIME</span><span class="stat-val" id="stat-time">-</span><span class="stat-rank rank-D" id="rank-time">D</span></div>
   </div>
 
-  <!-- MOBILE CONTROLS -->
-  <div id="mobile-controls">
-    <div id="mobile-left">
-      <button class="mob-btn" id="mob-left"  ontouchstart="mobileKey('ArrowLeft',true)"  ontouchend="mobileKey('ArrowLeft',false)">◀</button>
-      <button class="mob-btn" id="mob-right" ontouchstart="mobileKey('ArrowRight',true)" ontouchend="mobileKey('ArrowRight',false)">▶</button>
-    </div>
-    <div id="mobile-right">
-      <button class="mob-btn mob-jump" id="mob-jump"   ontouchstart="mobileKey('Space',true)"  ontouchend="mobileKey('Space',false)">▲</button>
-      <button class="mob-btn mob-pick"  id="mob-pickup" ontouchstart="mobileKey('KeyE',true)"   ontouchend="mobileKey('KeyE',false)">E</button>
-    </div>
-  </div>
+  <!-- MAIN CANVAS -->
+  <canvas id="game-canvas"></canvas>
 
   <!-- BATTLE OVERLAY -->
   <div id="battle-overlay" class="hidden">
@@ -93,25 +71,10 @@
       <div id="end-level-name">E1-1: THE ASHEN EXPANSE</div>
       <div id="end-mode">— STANDARD —</div>
       <div id="end-stats-table">
-        <div class="end-row">
-          <span class="end-key">TIME</span>
-          <span class="end-val" id="end-time">--</span>
-          <span class="end-letter" id="end-time-rank">-</span>
-        </div>
-        <div class="end-row">
-          <span class="end-key">KILLS</span>
-          <span class="end-val" id="end-kills">0</span>
-          <span class="end-letter" id="end-kills-rank">D</span>
-        </div>
-        <div class="end-row">
-          <span class="end-key">STYLE</span>
-          <span class="end-val" id="end-style">0</span>
-          <span class="end-letter" id="end-style-rank">D</span>
-        </div>
-        <div class="end-row">
-          <span class="end-key">SECRETS</span>
-          <span class="end-val" id="end-secrets">0 / 3</span>
-        </div>
+        <div class="end-row"><span class="end-key">TIME</span><span class="end-val" id="end-time">--</span><span class="end-letter" id="end-time-rank">-</span></div>
+        <div class="end-row"><span class="end-key">KILLS</span><span class="end-val" id="end-kills">0</span><span class="end-letter" id="end-kills-rank">D</span></div>
+        <div class="end-row"><span class="end-key">STYLE</span><span class="end-val" id="end-style">0</span><span class="end-letter" id="end-style-rank">D</span></div>
+        <div class="end-row"><span class="end-key">SECRETS</span><span class="end-val" id="end-secrets">0 / 3</span></div>
       </div>
       <div id="end-bonuses"></div>
       <div id="end-final-rank-wrap">
@@ -126,27 +89,44 @@
     </div>
   </div>
 
-  <!-- Firebase (module — must be before game scripts) -->
+  <!-- MOBILE CONTROLS -->
+  <div id="mobile-controls">
+    <div id="dpad">
+      <button class="dpad-btn" id="btn-left"
+        ontouchstart="mobileKey('ArrowLeft',true)"  ontouchend="mobileKey('ArrowLeft',false)"
+        onmousedown="mobileKey('ArrowLeft',true)"   onmouseup="mobileKey('ArrowLeft',false)">◀</button>
+      <button class="dpad-btn" id="btn-right"
+        ontouchstart="mobileKey('ArrowRight',true)" ontouchend="mobileKey('ArrowRight',false)"
+        onmousedown="mobileKey('ArrowRight',true)"  onmouseup="mobileKey('ArrowRight',false)">▶</button>
+    </div>
+    <div id="action-btns">
+      <button class="dpad-btn" id="btn-jump"
+        ontouchstart="mobileKey('Space',true)"  ontouchend="mobileKey('Space',false)"
+        onmousedown="mobileKey('Space',true)"   onmouseup="mobileKey('Space',false)">▲</button>
+      <button class="dpad-btn" id="btn-use"
+        ontouchstart="mobileKey('KeyE',true)"   ontouchend="mobileKey('KeyE',false)"
+        onmousedown="mobileKey('KeyE',true)"    onmouseup="mobileKey('KeyE',false)">E</button>
+    </div>
+  </div>
+
+  <!-- Firebase -->
   <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit }
       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { getAnalytics }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
-    const app = initializeApp({
-      apiKey:            "AIzaSyCoff2wpd4uUaDBdeZcqMz4ASYsd2zrVz4",
-      authDomain:        "deep-exploration.firebaseapp.com",
-      projectId:         "deep-exploration",
-      storageBucket:     "deep-exploration.firebasestorage.app",
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoff2wpd4uUaDBdeZcqMz4ASYsd2zrVz4",
+      authDomain: "deep-exploration.firebaseapp.com",
+      projectId: "deep-exploration",
+      storageBucket: "deep-exploration.firebasestorage.app",
       messagingSenderId: "423601867645",
-      appId:             "1:423601867645:web:e2650c5d49cd29c44d9a14",
-      measurementId:     "G-VTPK3QD7FT",
-    });
+      appId: "1:423601867645:web:e2650c5d49cd29c44d9a14",
+      measurementId: "G-VTPK3QD7FT"
+    };
 
-    getAnalytics(app);
-    const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
 
     window._db          = db;
     window._fsCollection = collection;
@@ -164,6 +144,14 @@
   <script src="js/battle.js"></script>
   <script src="js/boss.js"></script>
   <script src="js/game.js"></script>
+
+  <!-- Mobile key bridge -->
+  <script>
+    window.mobileKey = function(code, pressed) {
+      const ev = new KeyboardEvent(pressed ? 'keydown' : 'keyup', { code, bubbles: true });
+      document.dispatchEvent(ev);
+    };
+  </script>
 
 </body>
 </html>
