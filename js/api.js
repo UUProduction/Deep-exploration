@@ -2,7 +2,7 @@
 //  DEEP EXPLORATION — api.js
 // ═══════════════════════════════════════════════════════════════════════
 
-const ANTHROPIC_KEY = 'YOUR_ANTHROPIC_KEY_HERE';
+const ANTHROPIC_KEY = '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';
 
 const GRADE_SUBJECTS = {
   1: { ela: 'grade 1 spelling — 3 to 4 letter CVC words like cat, dog, sun', math: 'grade 1 addition and subtraction within 20' },
